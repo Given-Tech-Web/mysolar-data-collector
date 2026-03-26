@@ -1,0 +1,81 @@
+# Render Blueprint - Solar Data Collector
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: worker
+    name: solar-data-collector
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    region: singapore  # Closest to Korea
+    plan: starter      # $7/month, always running
+    autoDeploy: true
+
+    envVars:
+      # ===========================================
+      # HiveMQ Cloud MQTT Settings
+      # ===========================================
+      - key: HIVEMQ_HOST
+        sync: false  # Set manually in Render Dashboard
+      - key: HIVEMQ_PORT
+        value: "8883"
+      - key: HIVEMQ_USERNAME
+        sync: false
+      - key: HIVEMQ_PASSWORD
+        sync: false
+      - key: HIVEMQ_CLIENT_ID
+        value: solar_data_collector_render
+
+      # ===========================================
+      # MariaDB Database Settings
+      # ===========================================
+      - key: MARIADB_HOST
+        sync: false
+      - key: MARIADB_PORT
+        value: "3306"
+      - key: MARIADB_USER
+        sync: false
+      - key: MARIADB_PASSWORD
+        sync: false
+      - key: MARIADB_DATABASE
+        value: mysolar
+
+      # ===========================================
+      # Application Settings
+      # ===========================================
+      - key: NODE_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: info
+      - key: DEVICE_ID
+        value: solar_system_001
+
+      # ===========================================
+      # Data Retention (days)
+      # ===========================================
+      - key: RAW_DATA_RETENTION
+        value: "90"
+      - key: MINUTE_DATA_RETENTION
+        value: "30"
+      - key: FIVE_MINUTE_DATA_RETENTION
+        value: "90"
+      - key: HOURLY_DATA_RETENTION
+        value: "365"
+
+      # ===========================================
+      # Processing Settings
+      # ===========================================
+      - key: BATCH_SIZE
+        value: "100"
+      - key: AGGREGATION_INTERVAL
+        value: "60000"
+
+      # ===========================================
+      # Solar System Settings
+      # ===========================================
+      - key: CARBON_FACTOR
+        value: "0.4781"
+      - key: SOLAR_PANEL_CAPACITY
+        value: "5000"
+      - key: BATTERY_MAX_CAPACITY
+        value: "19.2"

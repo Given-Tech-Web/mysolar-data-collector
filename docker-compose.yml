@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  solar-collector:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: solar-data-collector
+    restart: unless-stopped
+
+    # Environment variables
+    env_file:
+      - .env
+
+    # Override specific variables if needed
+    environment:
+      - NODE_ENV=production
+      - LOG_LEVEL=info
+
+    # Mount logs directory for persistence
+    volumes:
+      - ./logs:/app/logs
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "node", "-e", "console.log('healthy')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    # Resource limits (optional)
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
