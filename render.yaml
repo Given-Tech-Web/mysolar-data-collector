@@ -16,13 +16,13 @@ services:
       # HiveMQ Cloud MQTT Settings
       # ===========================================
       - key: HIVEMQ_HOST
-        sync: false  # Set manually in Render Dashboard
+        sync: f9038a0a54ab47fa99885574c0229caf.s1.eu.hivemq.cloud  # Set manually in Render Dashboard
       - key: HIVEMQ_PORT
         value: "8883"
       - key: HIVEMQ_USERNAME
-        sync: false
+        sync: hivemq.webclient.1779762220013
       - key: HIVEMQ_PASSWORD
-        sync: false
+        sync: 08Gs%F2*l?@DNfKuoU7w
       - key: HIVEMQ_CLIENT_ID
         value: solar_data_collector_render
 
@@ -30,13 +30,13 @@ services:
       # MariaDB Database Settings
       # ===========================================
       - key: MARIADB_HOST
-        sync: false
+        sync: 220.69.222.151
       - key: MARIADB_PORT
         value: "3306"
       - key: MARIADB_USER
-        sync: false
+        sync: root
       - key: MARIADB_PASSWORD
-        sync: false
+        sync: utonics-giventech
       - key: MARIADB_DATABASE
         value: mysolar
 
